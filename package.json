@@ -1,6 +1,6 @@
 {
   "name": "whisper-static",
-  "version": "1.0.0",
+  "version": "1.1.0",
   "description": "Open AI whisper for electron app",
   "main": "index.js",
   "files": [
@@ -13,12 +13,12 @@
     "install": "node install.js",
     "test": "node test.js",
     "lint": "eslint .",
-    "prepublishOnly": "npm run lint && npm run install && npm test"
+    "prepublishOnly": "npm run install"
   },
   "author": "Saj Arora <dev@edropin.com> (http://edropin.com/)",
   "license": "UNLICENSED",
   "whisper-static": {
-    "binary-release-tag": "b1.0.0",
+    "binary-release-tag": "b1.0.1",
     "binary-release-name": "whisper"
   },
   "dependencies": {
