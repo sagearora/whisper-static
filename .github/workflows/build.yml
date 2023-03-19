@@ -1,9 +1,15 @@
-name: build
-on: [push]
+name: Release binaries
+on:
+  push:
+    tags:
+      - "b*"
 
 jobs:
-  macOS-latest:
-    runs-on: macOS-latest
+  release:
+    runs-on: ${{matrix.os}}
+    strategy:
+      matrix:
+        platform: [x64]
 
     steps:
       - name: Clone
@@ -18,8 +24,19 @@ jobs:
           cd whisper.cpp
           make
           make main
-      - name: Upload binaries
-        uses: actions/upload-artifact@v1
+      - name: Create Release
+        id: create_release
+        uses: actions/create-release@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
-          name: whisper-bin-${{ matrix.arch }}
-          path: whisper.cpp/build/bin/${{ matrix.build }}
+          tag_name: ${{ github.ref }}
+          release_name: Release ${{ github.ref }}
+      - uses: actions/upload-release-asset@v1.0.1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          upload_url: ${{ steps.create_release.outputs.upload_url }}
+          asset_path: whisper.cpp/main
+          asset_name: ${{matrix.os}}
+          asset_content_type: application/octet-stream
