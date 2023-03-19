@@ -8,8 +8,6 @@ jobs:
     steps:
       - name: Clone
         uses: actions/checkout@v1
-        with:
-          repository: "ggerganov/whisper.cpp"
 
       - name: Dependencies
         run: |
