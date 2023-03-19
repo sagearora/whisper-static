@@ -1,0 +1,26 @@
+name: build
+on: [push]
+
+jobs:
+  macOS-latest:
+    runs-on: macOS-latest
+
+    steps:
+      - name: Clone
+        uses: actions/checkout@v1
+        with:
+          repository: "ggerganov/whisper.cpp"
+
+      - name: Dependencies
+        run: |
+          brew update
+          brew install sdl2
+      - name: Build
+        run: |
+          make
+          make main
+      - name: Upload binaries
+        uses: actions/upload-artifact@v1
+        with:
+          name: whisper-bin-${{ matrix.arch }}
+          path: build/bin/${{ matrix.build }}
