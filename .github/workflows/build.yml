@@ -6,6 +6,7 @@ on:
 
 permissions:
   contents: write
+
 jobs:
   release:
     runs-on: ${{matrix.os}}
@@ -27,13 +28,19 @@ jobs:
           cd whisper.cpp
           make
           make main
-          ls -l
-      # - name: Create Release
-      #   id: create_release
-      #   uses: softprops/action-gh-release@v1
-      #   env:
-      #     GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-      #   with:
-      #     draft: true
-      #     files: |
-      #       whisper.cpp/main
+      - name: Create Release
+        id: create_release
+        uses: actions/create-release@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          tag_name: ${{ github.ref }}
+          release_name: Release ${{ github.ref }}
+      - uses: actions/upload-release-asset@v1.0.1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          upload_url: ${{ steps.create_release.outputs.upload_url }}
+          asset_path: whisper.cpp/main
+          asset_name: whisper
+          asset_content_type: application/octet-stream
