@@ -17,10 +17,11 @@ jobs:
           brew install sdl2
       - name: Build
         run: |
+          cd whisper.cpp
           make
           make main
       - name: Upload binaries
         uses: actions/upload-artifact@v1
         with:
           name: whisper-bin-${{ matrix.arch }}
-          path: build/bin/${{ matrix.build }}
+          path: whisper.cpp/build/bin/${{ matrix.build }}
