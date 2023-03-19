@@ -18,8 +18,8 @@
   "author": "Saj Arora <dev@edropin.com> (http://edropin.com/)",
   "license": "UNLICENSED",
   "whisper-static": {
-    "binary-release-tag": "b5.0.1",
-    "binary-release-name": "5.0.1"
+    "binary-release-tag": "b1.0.0",
+    "binary-release-name": "whisper"
   },
   "dependencies": {
     "@derhuerst/http-basic": "^8.2.0",
